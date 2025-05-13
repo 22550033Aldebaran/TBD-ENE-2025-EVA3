@@ -1,0 +1,214 @@
+exa2_tbd
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 30
+Server version: 8.0.41 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > create database exa2_tbd;
+Query OK, 1 row affected (0.0088 sec)
+ MySQL  localhost:3306 ssl  SQL > use exa2_tbd;
+Default schema set to `exa2_tbd`.
+Fetching global names, object names from `exa2_tbd` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > CREATE TABLE alumnos (
+                                         ->     id_alumno INT AUTO_INCREMENT PRIMARY KEY,
+                                         ->     nombre VARCHAR(100) NOT NULL,
+                                         ->     carrera VARCHAR(100)
+                                         -> );
+Query OK, 0 rows affected (0.0491 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > CREATE TABLE cursos (
+                                         ->     id_curso INT AUTO_INCREMENT PRIMARY KEY,
+                                         ->     nombre_curso VARCHAR(100) NOT NULL,
+                                         ->     creditos INT^C
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > CREATE TABLE cursos (
+                                         ->     id_curso INT AUTO_INCREMENT PRIMARY KEY,
+                                         ->     nombre_curso VARCHAR(100) NOT NULL,
+                                         ->     creditos INT);
+Query OK, 0 rows affected (0.0285 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > show tables;
++--------------------+
+| Tables_in_exa2_tbd |
++--------------------+
+| alumnos            |
+| cursos             |
++--------------------+
+2 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > CREATE TABLE inscripciones (
+                                         ->     id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
+                                         ->     id_alumno INT,
+                                         ->     id_curso INT,
+                                         ->     fecha_inscripcion DATE,
+                                         ->     FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno),
+                                         ->     FOREIGN KEY (id_curso) REFERENCES cursos(id_curso));
+Query OK, 0 rows affected (0.0686 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > show tables;
++--------------------+
+| Tables_in_exa2_tbd |
++--------------------+
+| alumnos            |
+| cursos             |
+| inscripciones      |
++--------------------+
+3 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into alumnos (nombre, carrera) values
+                                         -> ("Ana Torres", "ingenieria en sistemas"),
+                                         -> ("Sergio Tovar", "administracion de empresas"),
+                                         -> ("Pepe Aguilar", "ingenieria industrial");
+Query OK, 3 rows affected (0.0175 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from akumnos;
+ERROR: 1146 (42S02): Table 'exa2_tbd.akumnos' doesn't exist
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from alumnos;
++-----------+--------------+----------------------------+
+| id_alumno | nombre       | carrera                    |
++-----------+--------------+----------------------------+
+|         1 | Ana Torres   | ingenieria en sistemas     |
+|         2 | Sergio Tovar | administracion de empresas |
+|         3 | Pepe Aguilar | ingenieria industrial      |
++-----------+--------------+----------------------------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > INSERT INTO cursos (nombre_curso, creditos) VALUES
+                                         -> ('Matemáticas Discretas', 4),
+                                         -> ('Contabilidad Básica', 3),
+                                         -> ('Ecuaciones diferenciales',5);
+Query OK, 3 rows affected (0.0065 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from cursos;
++----------+--------------------------+----------+
+| id_curso | nombre_curso             | creditos |
++----------+--------------------------+----------+
+|        1 | Matemáticas Discretas    |        4 |
+|        2 | Contabilidad Básica      |        3 |
+|        3 | Ecuaciones diferenciales |        5 |
++----------+--------------------------+----------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > Insert into inscripciones (id_alumno, id_curso, fecha_inscripcion)
+                                         -> (1, 1, 20-03-2025),
+                                         -> (1, 2, 05-03-2024),
+                                         -> (2, 3, 09-12-20245),
+                                         -> (3, 1, 30-04-2025),
+                                         -> (2, 1, 21-02-2025);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 1, 20-03-2025),
+(1, 2, 05-03-2024),
+(2, 3, 09-12-20245),
+(3, 1, 30-04-2025),
+' at line 2
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > Insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) (1, 1, '20-03-2025'), (1, 2, '05-03-2024'), (2, 3, '09-12-20245'), (3, 1, '30-04-2025'), (2, 1, '21-02-2025');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 1, '20-03-2025'), (1, 2, '05-03-2024'), (2, 3, '09-12-20245'), (3, 1, '30-04-' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > Insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values (1, 1, '20-03-2025'), (1, 2, '05-03-2024'), (2, 3, '09-12-20245'), (3, 1, '30-04-2025'), (2, 1, '21-02-2025');
+ERROR: 1292 (22007): Incorrect date value: '20-03-2025' for column 'fecha_inscripcion' at row 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values
+                                         -> (1, 1, '2025-01-10'),
+                                         -> (1, 2, '2025-01-15'),
+                                         -> (2, 1, '2025-01-12'),
+                                         -> (2, 3, '2025-01-20'),
+                                         -> (3, 2, '2025-01-18');
+Query OK, 5 rows affected (0.0054 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from inscripciones;
++----------------+-----------+----------+-------------------+
+| id_inscripcion | id_alumno | id_curso | fecha_inscripcion |
++----------------+-----------+----------+-------------------+
+|              1 |         1 |        1 | 2025-01-10        |
+|              2 |         1 |        2 | 2025-01-15        |
+|              3 |         2 |        1 | 2025-01-12        |
+|              4 |         2 |        3 | 2025-01-20        |
+|              5 |         3 |        2 | 2025-01-18        |
++----------------+-----------+----------+-------------------+
+5 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre AS alumno, c.nombre_curso AS curso, i.fecha_inscripcion
+                                         -> FROM inscripciones i
+                                         -> join alumnos a ON i.id_alumno = a.id_alumno
+                                         -> join cursos c ON i.id_curso = c.id_curso;
++--------------+--------------------------+-------------------+
+| alumno       | curso                    | fecha_inscripcion |
++--------------+--------------------------+-------------------+
+| Ana Torres   | Matemáticas Discretas    | 2025-01-10        |
+| Ana Torres   | Contabilidad Básica      | 2025-01-15        |
+| Sergio Tovar | Matemáticas Discretas    | 2025-01-12        |
+| Sergio Tovar | Ecuaciones diferenciales | 2025-01-20        |
+| Pepe Aguilar | Contabilidad Básica      | 2025-01-18        |
++--------------+--------------------------+-------------------+
+5 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select c.nombre_curso, a.nombre AS alumno
+                                         -> from cursos c
+                                         -> left join inscripciones i ON c.id_curso = i.id_curso
+                                         -> left join alumnos a ON i.id_alumno = a.id_alumno;
++--------------------------+--------------+
+| nombre_curso             | alumno       |
++--------------------------+--------------+
+| Matemáticas Discretas    | Ana Torres   |
+| Matemáticas Discretas    | Sergio Tovar |
+| Contabilidad Básica      | Ana Torres   |
+| Contabilidad Básica      | Pepe Aguilar |
+| Ecuaciones diferenciales | Sergio Tovar |
++--------------------------+--------------+
+5 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre AS alumno, c.nombre_curso AS curso
+                                         -> from alumnos a
+                                         -> left join inscripciones i ON a.id_alumno = i.id_alumno
+                                         -> left join cursos c ON i.id_curso = c.id_curso;
++--------------+--------------------------+
+| alumno       | curso                    |
++--------------+--------------------------+
+| Ana Torres   | Matemáticas Discretas    |
+| Ana Torres   | Contabilidad Básica      |
+| Sergio Tovar | Matemáticas Discretas    |
+| Sergio Tovar | Ecuaciones diferenciales |
+| Pepe Aguilar | Contabilidad Básica      |
++--------------+--------------------------+
+5 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre AS alumno, COUNT(i.id_curso) AS cantidad_cursos
+                                         -> FROM alumnos a
+                                         -> left join inscripciones i ON a.id_alumno = i.id_alumno
+                                         -> group by a.id_alumno;
++--------------+-----------------+
+| alumno       | cantidad_cursos |
++--------------+-----------------+
+| Ana Torres   |               2 |
+| Sergio Tovar |               2 |
+| Pepe Aguilar |               1 |
++--------------+-----------------+
+3 rows in set (0.0041 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion)values
+                                         ->  (999, 999, '2025-01-30');
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > delete from alumnos where id_alumno = 1;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`))          delete from alumnos where id_alumno = ^C
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from inscripciones;
++----------------+-----------+----------+-------------------+
+| id_inscripcion | id_alumno | id_curso | fecha_inscripcion |
++----------------+-----------+----------+-------------------+
+|              1 |         1 |        1 | 2025-01-10        |
+|              2 |         1 |        2 | 2025-01-15        |
+|              3 |         2 |        1 | 2025-01-12        |
+|              4 |         2 |        3 | 2025-01-20        |
+|              5 |         3 |        2 | 2025-01-18        |
++----------------+-----------+----------+-------------------+
+5 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from cursos;
++----------+--------------------------+----------+
+| id_curso | nombre_curso             | creditos |
++----------+--------------------------+----------+
+|        1 | Matemáticas Discretas    |        4 |
+|        2 | Contabilidad Básica      |        3 |
+|        3 | Ecuaciones diferenciales |        5 |
++----------+--------------------------+----------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select * from alumnos;
++-----------+--------------+----------------------------+
+| id_alumno | nombre       | carrera                    |
++-----------+--------------+----------------------------+
+|         1 | Ana Torres   | ingenieria en sistemas     |
+|         2 | Sergio Tovar | administracion de empresas |
+|         3 | Pepe Aguilar | ingenieria industrial      |
++-----------+--------------+----------------------------+
+3 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL >
